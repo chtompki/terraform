@@ -94,6 +94,11 @@ type Meta struct {
 	// This overrides all other search paths when discovering plugins.
 	pluginPath []string
 
+	// plugin url is a user defined string that is an alternate http location
+	// form which plugins can be resolved. It can be set using the `-plugin-url`
+	// flag to be saved in the .terraformrc file.
+	pluginUrl string
+
 	ignorePluginChecksum bool
 
 	// Override certain behavior for tests within this package

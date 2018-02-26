@@ -139,6 +139,12 @@ func (m *Meta) storePluginPath(pluginPath []string) error {
 	return ioutil.WriteFile(path, js, 0644)
 }
 
+func (m *Meta) storePluginUrl(pluginUrl string) error {
+	if len(pluginUrl) == 0 {
+		return nil
+	}
+}
+
 // Load the user-defined plugin search path into Meta.pluginPath if the file
 // exists.
 func (m *Meta) loadPluginPath() ([]string, error) {

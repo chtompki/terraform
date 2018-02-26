@@ -39,6 +39,7 @@ func (c *InitCommand) Run(args []string) int {
 	var flagBackend, flagGet, flagUpgrade bool
 	var flagConfigExtra map[string]interface{}
 	var flagPluginPath FlagStringSlice
+	var flagPluginUrl FlagStringSlice
 	var flagVerifyPlugins bool
 
 	args, err := c.Meta.process(args, false)
@@ -57,6 +58,7 @@ func (c *InitCommand) Run(args []string) int {
 	cmdFlags.BoolVar(&c.reconfigure, "reconfigure", false, "reconfigure")
 	cmdFlags.BoolVar(&flagUpgrade, "upgrade", false, "")
 	cmdFlags.Var(&flagPluginPath, "plugin-dir", "plugin directory")
+	cmdFlags.Var(&flagPluginUrl, "plugin-url", "plugin url")
 	cmdFlags.BoolVar(&flagVerifyPlugins, "verify-plugins", true, "verify plugins")
 
 	cmdFlags.Usage = func() { c.Ui.Error(c.Help()) }
@@ -67,6 +69,10 @@ func (c *InitCommand) Run(args []string) int {
 	if len(flagPluginPath) > 0 {
 		c.pluginPath = flagPluginPath
 		c.getPlugins = false
+	}
+
+	if len(flagPluginUrl) > 0 {
+
 	}
 
 	// set providerInstaller if we don't have a test version already
@@ -464,6 +470,7 @@ func (c *InitCommand) AutocompleteFlags() complete.Flags {
 		"-lock-timeout":   complete.PredictAnything,
 		"-no-color":       complete.PredictNothing,
 		"-plugin-dir":     complete.PredictDirs(""),
+		"-plugin-url":     complete.PredictNothing,
 		"-reconfigure":    complete.PredictNothing,
 		"-upgrade":        completePredictBoolean,
 		"-verify-plugins": completePredictBoolean,
@@ -525,6 +532,10 @@ Options:
                        default search paths for plugins, and prevents the 
                        automatic installation of plugins. This flag can be used
                        multiple times.
+
+  -plugin-url          URL which to resolve terraform plugins. This overrides the
+                       standard url from which we resolve plugins, namely
+                       https://releases.hashicorp.com
 
   -reconfigure         Reconfigure the backend, ignoring any saved
                        configuration.

@@ -32,6 +32,8 @@ type Config struct {
 	// avoid repeatedly re-downloading over the Internet.
 	PluginCacheDir string `hcl:"plugin_cache_dir"`
 
+	PluginUrl string
+
 	Hosts map[string]*ConfigHost `hcl:"host"`
 
 	Credentials        map[string]map[string]interface{}   `hcl:"credentials"`
